@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{{ post.title }}</h1>
+<p>{{ post.content }}</p>
+<h2>Comments</h2>
+<ul>
+    {% for comment in comments %}
+    <li>{{ comment.author.username }} says: "{{ comment.content }}"</li>
+    {% endfor %}
+</ul>
+<a href="{% url 'posts_list' %}">Back to all posts</a>
+{% endblock %}

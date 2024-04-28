@@ -1,11 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Post, Comment, Like, Bookmark
 from .forms import PostForm, CommentForm
 
 def posts_list(request):
     posts = Post.objects.all()
-    return render(request, 'posts/list.html', {'posts': posts})
+    return render(request, 'posts/index.html', {'posts': posts})
 
 @login_required
 def post_create(request):
@@ -19,6 +19,12 @@ def post_create(request):
     else:
         form = PostForm()
     return render(request, 'posts/create.html', {'form': form})
+
+def post_detail(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    comments = post.comments.all()
+    return render(request, 'posts/detail.html', {'post': post, 'comments': comments})
+
 
 @login_required
 def post_delete(request, pk):
@@ -78,9 +84,5 @@ def about(request):
 
 def plants_index(request):
     posts = Post.objects.all()
-    return render(request, 'plants/index.html', {'posts': posts})
+    return render(request, 'posts/index.html', {'posts': posts})
 
-# def plants_index(request):
-#     return render(request, 'plants/index.html', {
-#         'plants': plants
-#     })
