@@ -39,11 +39,6 @@ def post_detail(request, pk):
         form = CommentForm()
     return render(request, 'posts/detail.html', {'post': post, 'comments': comments, 'form': form})
 
-# def post_detail(request, pk):
-#     post = get_object_or_404(Post, pk=pk)
-#     comments = post.comments.all()
-#     return render(request, 'posts/detail.html', {'post': post, 'comments': comments})
-
 def post_delete(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.user == post.author:

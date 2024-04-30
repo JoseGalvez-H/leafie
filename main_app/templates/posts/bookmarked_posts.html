@@ -1,14 +1,18 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Bookmarked Posts</h1>
-<ul>
-    {% for post in posts %}
-    <li>
-        <h2>{{ post.title }}</h2>
-        <p>{{ post.content|truncatewords:30 }}</p>
-        <a href="{% url 'post_detail' pk=post.pk %}">Read more...</a>
-    </li>
-    {% endfor %}
-</ul>
+<div style="background-color: #F3FAF7; color: #03543F;" class="p-4 max-w-2xl mx-auto rounded shadow-lg">
+    <h1 style="color: #046C4E; font-size: 2.5rem; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);" class="font-bold text-center mb-4">Bookmarked Posts</h1>
+
+    <ul style="list-style-type: none; padding: 0;">
+        {% for post in posts %}
+        <li class="mb-4 p-4 rounded shadow" style="background-color: #DEF7EC;">
+            <h2 style="color: #057A55; font-size: 1.5rem;" class="font-bold">{{ post.title }}</h2>
+            <p>{{ post.content|truncatewords:30 }}</p>
+            <a href="{% url 'post_detail' pk=post.pk %}" style="color: #046C4E; font-weight: bold;" class="hover:underline">Read more...</a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
 {% endblock %}
+

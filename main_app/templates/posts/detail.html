@@ -1,28 +1,28 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="post-detail">
-    <h1>{{ post.title }}</h1>
+<div style="background-color: #F3FAF7; color: #03543F;" class="p-4 max-w-2xl mx-auto rounded shadow-lg">
+    <h1 style="color: #046C4E;" class="font-bold text-xl mb-2">{{ post.title }}</h1>
     <p>{{ post.content }}</p>  
-    <p>Posted by {{ post.author.username }} on {{ post.created_at }}</p>
-    <div class="post-actions">
-        <a href="{% url 'post_delete' pk=post.pk %}" class="btn btn-danger">Delete Post</a>
+    <p style="font-style: italic; color: #057A55;">Posted by {{ post.author.username }} on {{ post.created_at | date:"F d, Y" }}</p>
+    <div class="post-actions flex justify-between my-4">
+        <a href="{% url 'post_delete' pk=post.pk %}" class="py-2 px-4 bg-red-500 hover:bg-red-600 text-white rounded transition duration-300 ease-in-out">Delete Post</a>
         <form action="{% url 'like_post' post_id=post.pk %}" method="post" style="display: inline;">
             {% csrf_token %}
-            <button type="submit" class="btn btn-like">Like</button>
+            <button type="submit" class="py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white rounded transition duration-300 ease-in-out">Like</button>
         </form>
         <form action="{% url 'bookmark_post' post_id=post.pk %}" method="post" style="display: inline;">
             {% csrf_token %}
-            <button type="submit" class="btn btn-bookmark">Bookmark</button>
+            <button type="submit" class="py-2 px-4 bg-yellow-500 hover:bg-yellow-600 text-white rounded transition duration-300 ease-in-out">Bookmark</button>
         </form>
     </div>
 
-    <section class="comments">
+    <section class="comments my-4">
         <h2>Comments</h2>
         {% if comments %}
-            <ul>
+            <ul style="list-style-type: none; padding: 0;">
                 {% for comment in comments %}
-                    <li>{{ comment.author.username }} says: "{{ comment.content }}"</li>
+                    <li style="margin-bottom: 1rem; background-color: #DEF7EC; padding: 1rem; border-radius: 0.5rem;">{{ comment.author.username }} says: "{{ comment.content }}"</li>
                 {% endfor %}
             </ul>
         {% else %}
@@ -31,50 +31,34 @@
     </section>
 
     <hr>
-<section class="add-comment">
-    <h3>Add a Comment</h3>
-    <form action="{% url 'post_detail' pk=post.pk %}" method="post">
-        {% csrf_token %}
-        <div class="form-group">
-            <label for="id_comment">Your Comment:</label>
-            {% if form.comment %}
-                {{ form.comment.errors }}
-                <textarea id="id_comment" name="{{ form.comment.name }}" rows="4" cols="50">{{ form.comment.value|default_if_none:'' }}</textarea>
-            {% else %}
-                <textarea id="id_comment_{{ comment.id }}" name="comment" rows="4" cols="50"></textarea>
-                
-            {% endif %}
-        </div>
-        
-        {% if form.non_field_errors %}
-            <div class="alert alert-danger">
-                {{ form.non_field_errors }}
-            </div>
-        {% endif %}
-        
-        <button type="submit" class="btn btn-submit">Submit Comment</button>
-    </form>
-</section>
-
-
-    <!-- <hr>
-    <section class="add-comment">
+    <section class="add-comment mt-4">
         <h3>Add a Comment</h3>
         <form action="{% url 'post_detail' pk=post.pk %}" method="post">
             {% csrf_token %}
-            {{ form.as_p }}
+            <div class="form-group mb-2">
+                <label for="id_comment">Your Comment:</label>
+                {% if form.comment %}
+                    {{ form.comment.errors }}
+                    <textarea id="id_comment" name="{{ form.comment.name }}" rows="4" cols="50" class="w-full p-2 rounded border border-green-300"></textarea>
+                {% else %}
+                    <textarea id="id_comment_{{ comment.id }}" name="comment" rows="4" cols="50" class="w-full p-2 rounded border border-green-300"></textarea>
+                {% endif %}
+            </div>
+            
             {% if form.non_field_errors %}
                 <div class="alert alert-danger">
                     {{ form.non_field_errors }}
                 </div>
             {% endif %}
-            <button type="submit" class="btn btn-submit">Submit Comment</button>
+            
+            <button type="submit" class="py-2 px-4 bg-emerald-500 hover:bg-emerald-600 text-white rounded transition duration-300 ease-in-out">Submit Comment</button>
         </form>
     </section>
-</div> -->
 
-<div class="navigation">
-    <a href="{% url 'posts_list' %}" class="btn btn-back">Back to all posts</a>
+    <div class="navigation mt-4 mb-2">
+        <a href="{% url 'posts_list' %}" class="py-2 px-4 bg-gray-500 hover:bg-gray-600 text-white rounded transition duration-300 ease-in-out">Back to all posts</a>
+    </div>
+
 </div>
 
 {% endblock %}
