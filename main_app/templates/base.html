@@ -9,12 +9,30 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>LEAFIE</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
-    <!-- <link rel="stylesheet" href="{% static 'css/style.css' %}"> -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
 </head>
 
 <body>
-    <header class="navbar-fixed">
+
+    <header style="background-color: #F3FAF7;" class="p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="/" style="color: #03543F;" class="font-bold text-xl">LEAFIE</a>
+            <nav>
+                <ul class="flex space-x-4">
+                    <li><a href="/about" style="color: #046C4E;" class="hover:underline">Learn</a></li>
+                    <li><a href="/plants" style="color: #046C4E;" class="hover:underline">Community</a></li>
+                    <li><a href="{% url 'bookmarked_posts' %}" style="color: #046C4E;" class="hover:underline">Bookmarked Posts</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+
+
+    <!-- <header class="navbar-fixed">
         <nav>
             <div class="nav-wrapper">
                 <ul>
@@ -28,14 +46,21 @@
                 </ul>
             </div>
         </nav>
-    </header>
+    </header> -->
     <main class="container">
         {% block content %}
         {% endblock %}
     </main>
-    <footer class="page-footer">
-        <div class="right">All Rights Reserved, &copy; 2024 LEAFIE &nbsp;</div>
+
+    <footer style="background-color: #F3FAF7; color: #03543F;" class="p-4">
+        <div class="container mx-auto text-right">
+            All Rights Reserved, &copy; 2024 LEAFIE &nbsp;
+        </div>
     </footer>
+    
+    <!-- <footer class="page-footer">
+        <div class="right">All Rights Reserved, &copy; 2024 LEAFIE &nbsp;</div>
+    </footer> -->
 </body>
 
 </html>
