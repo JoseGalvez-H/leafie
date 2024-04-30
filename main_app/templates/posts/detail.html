@@ -1,13 +1,80 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>{{ post.title }}</h1>
-<p>{{ post.content }}</p>
-<h2>Comments</h2>
-<ul>
-    {% for comment in comments %}
-    <li>{{ comment.author.username }} says: "{{ comment.content }}"</li>
-    {% endfor %}
-</ul>
-<a href="{% url 'posts_list' %}">Back to all posts</a>
+<div class="post-detail">
+    <h1>{{ post.title }}</h1>
+    <p>{{ post.content }}</p>  
+    <p>Posted by {{ post.author.username }} on {{ post.created_at }}</p>
+    <div class="post-actions">
+        <a href="{% url 'post_delete' pk=post.pk %}" class="btn btn-danger">Delete Post</a>
+        <form action="{% url 'like_post' post_id=post.pk %}" method="post" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-like">Like</button>
+        </form>
+        <form action="{% url 'bookmark_post' post_id=post.pk %}" method="post" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-bookmark">Bookmark</button>
+        </form>
+    </div>
+
+    <section class="comments">
+        <h2>Comments</h2>
+        {% if comments %}
+            <ul>
+                {% for comment in comments %}
+                    <li>{{ comment.author.username }} says: "{{ comment.content }}"</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No comments yet. Be the first to comment!</p>
+        {% endif %}
+    </section>
+
+    <hr>
+<section class="add-comment">
+    <h3>Add a Comment</h3>
+    <form action="{% url 'post_detail' pk=post.pk %}" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="id_comment">Your Comment:</label>
+            {% if form.comment %}
+                {{ form.comment.errors }}
+                <textarea id="id_comment" name="{{ form.comment.name }}" rows="4" cols="50">{{ form.comment.value|default_if_none:'' }}</textarea>
+            {% else %}
+                <textarea id="id_comment_{{ comment.id }}" name="comment" rows="4" cols="50"></textarea>
+                
+            {% endif %}
+        </div>
+        
+        {% if form.non_field_errors %}
+            <div class="alert alert-danger">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+        
+        <button type="submit" class="btn btn-submit">Submit Comment</button>
+    </form>
+</section>
+
+
+    <!-- <hr>
+    <section class="add-comment">
+        <h3>Add a Comment</h3>
+        <form action="{% url 'post_detail' pk=post.pk %}" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            {% if form.non_field_errors %}
+                <div class="alert alert-danger">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+            <button type="submit" class="btn btn-submit">Submit Comment</button>
+        </form>
+    </section>
+</div> -->
+
+<div class="navigation">
+    <a href="{% url 'posts_list' %}" class="btn btn-back">Back to all posts</a>
+</div>
+
 {% endblock %}

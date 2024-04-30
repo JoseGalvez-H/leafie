@@ -1,6 +1,45 @@
 {% extends 'base.html' %}}<hr>
 
 {% block content %}
-<p>Hire LEAFIE!</p>
+
+<body>
+    <h1>Learn About Your Plants</h1>
+    <h4>Search for a Plant</h4>
+    <form method="get" action="{% url 'about' %}">
+        <input type="text" name="q" placeholder="Enter plant name" value="{{ request.GET.q }}">
+        <button type="submit">Search</button>
+    </form>
+    {% if plant %}
+        <div>
+            <h4>{{ plant.common_name }} ({{ plant.scientific_name.0 }})</h4>
+            <img src="{{ plant.default_image.small_url }}" alt="Image of {{ plant.common_name }}">
+            <p>Cycle: {{ plant.cycle }}</p>
+            <p>Watering: {{ plant.watering }}</p>
+            <p>Sunlight: {{ plant.sunlight|default_if_none:"Not specified"|join:", "|capfirst }}</p>
+            <p>Indoor: {{ plant.indoor|yesno:"Yes,No" }}</p>
+        </div>
+    {% else %}
+        <p>No plant information available at this time.</p>
+    {% endif %}
+</body>
+<!-- <body>
+    <h1>Search for a Plant</h1>
+    <form method="get" action="{% url 'about' %}">
+        <input type="text" name="q" placeholder="Enter plant name" value="{{ request.GET.q }}">
+        <button type="submit">Search</button>
+    </form>
+
+    {% if plant %}
+    <div>
+        <h2>{{ plant.common_name }} ({{ plant.scientific_name.0 }})</h2>
+        <img src="{{ plant.default_image.small_url }}" alt="Image of {{ plant.common_name }}">
+        <p>Watering: {{ plant.watering }}</p>
+    </div>
+    {% else %}
+    <p>No plant information available at this time.</p>
+    {% endif %}
+</body> -->
+
+
 
 {% endblock%}

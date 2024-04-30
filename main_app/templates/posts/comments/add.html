@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Add a Comment to {{ post.title }}</h1>
+<form action="{% url 'add_comment' post_id=post.pk %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn">Submit</button>
+</form>
+<form method="post">
+    {% csrf_token %}
+    <label for="id_content">Comment:</label>
+    <textarea id="id_content" name="content">{{ form.content.value }}</textarea>
+    <button type="submit" class="btn">Submit</button>
+</form>
+<a href="{% url 'post_detail' pk=post.pk %}">Back to Post</a>
+{% endblock %}

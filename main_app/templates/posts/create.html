@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Create a New Post</h1>
+<form method="post" action="{% url 'post_create' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    {% if form.errors %}
+        <div class="alert alert-danger">
+            <strong>Form errors:</strong>
+            {{ form.errors }}
+        </div>
+    {% endif %}
+    <button type="submit" class="btn">Submit</button>
+</form>
+<a href="{% url 'posts_list' %}">Back to all posts</a>
+{% endblock %}
+
+
+
+
+
+
+
+
+
