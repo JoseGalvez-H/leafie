@@ -6,17 +6,7 @@
 <body>
     <h2 style="color: #046C4E; font-size: 3rem; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);" class="font-bold text-center mt-4 mb-4">Learn About Your Plants</h2>
 
-    <div style="background-color: #F3FAF7; color: #03543F;" class="p-4 max-w-md mx-auto rounded shadow-lg">
-        <h4 class="font-bold text-lg mb-3">Search for a Plant</h4>
-        <form method="get" action="{% url 'about' %}" class="flex flex-col space-y-2">
-            <input type="text" name="q" placeholder="Enter plant name" value="{{ request.GET.q }}"
-                class="form-input px-4 py-2 rounded border border-emerald-300 focus:border-emerald-500 focus:ring focus:ring-emerald-500 focus:ring-opacity-50"
-                style="color: #03543F; background-color: #DEF7EC;">
-                <button type="submit"
-                class="bg-emerald-400 hover:bg-emerald-500 text-emerald-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline shadow"
-                style="transition: background-color 0.3s ease-in-out; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">Search</button>
-        </form>
-    </div>
+
     {% if plant %}
     <div style="background-color: #F3FAF7; color: #03543F;"
         class="max-w-sm rounded overflow-hidden shadow-lg p-4 m-4 mx-auto">
@@ -30,6 +20,17 @@
     {% else %}
     <p>No plant information available at this time.</p>
     {% endif %}
+    <div style="background-color: #F3FAF7; color: #03543F;" class="p-4 max-w-md mx-auto rounded shadow-lg">
+        <h4 class="font-bold text-lg mb-3">Search for a Plant</h4>
+        <form method="get" action="{% url 'about' %}" class="flex flex-col space-y-2">
+            <input type="text" name="q" placeholder="Enter plant name" value="{{ request.GET.q }}"
+                class="form-input px-4 py-2 rounded border border-emerald-300 focus:border-emerald-500 focus:ring focus:ring-emerald-500 focus:ring-opacity-50"
+                style="color: #03543F; background-color: #DEF7EC;">
+                <button type="submit"
+                class="bg-emerald-400 hover:bg-emerald-500 text-emerald-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline shadow"
+                style="transition: background-color 0.3s ease-in-out; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">Search</button>
+        </form>
+    </div>
 </body>
 
 {% endblock%}

@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 import os
 from .models import Post, Comment, Like, Bookmark
 from .forms import PostForm, CommentForm
-import requests
+import requests, random
 
 def posts_list(request):
     posts = Post.objects.all()
@@ -72,7 +72,6 @@ def delete_comment(request, post_id, comment_id):
     comment.delete()
     return redirect('post_detail', pk=post_id)
 
-
 def like_post(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
     like, created = Like.objects.get_or_create(post=post, user=request.user)
@@ -80,14 +79,12 @@ def like_post(request, post_id):
         like.delete() 
     return redirect('posts_list')
 
-
 def bookmark_post(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
     bookmark, created = Bookmark.objects.get_or_create(post=post, user=request.user)
     if not created:
         bookmark.delete() 
     return redirect('bookmarked_posts')
-
 
 def bookmarked_posts(request):
     bookmarks = Bookmark.objects.filter(user=request.user).select_related('post')
@@ -98,23 +95,54 @@ def bookmarked_posts(request):
 def home(request):
     return render(request, 'home.html')
 
+# def about(request):
+#     API_KEY = os.environ.get('API_KEY')
+#     query = request.GET.get('q')
+#     url = f'https://perenual.com/api/species-list?key={API_KEY}'
+    
+#     if query:
+#         url += f'&q={query}'
+#     try:
+#         response = requests.get(url)
+#         response.raise_for_status()
+#         data = response.json()
+#         plants = data.get('data', [])
+#         plant = plants[0] if plants else None
+#     except requests.RequestException as e:
+#         plant = None
+#         print(f"API request failed: {e}")
+#     except ValueError:
+#         plant = None
+#         print("Error decoding JSON from API")
+#     return render(request, 'about.html', {'plant': plant})
+
+
 def about(request):
     API_KEY = os.environ.get('API_KEY')
     query = request.GET.get('q')
     url = f'https://perenual.com/api/species-list?key={API_KEY}'
-    
+
     if query:
         url += f'&q={query}'
+    else:
+        url += '&random=true'  
+
     try:
         response = requests.get(url)
         response.raise_for_status()
         data = response.json()
         plants = data.get('data', [])
-        plant = plants[0] if plants else None
+        
+        if not query and plants:
+            plant = random.choice(plants) 
+        else:
+            plant = plants[0] if plants else None
     except requests.RequestException as e:
         plant = None
         print(f"API request failed: {e}")
     except ValueError:
         plant = None
         print("Error decoding JSON from API")
+
     return render(request, 'about.html', {'plant': plant})
+
