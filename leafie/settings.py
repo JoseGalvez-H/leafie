@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_browser_reload',
+    # 'django_browser_reload',
 
 ]
 
@@ -138,6 +138,8 @@ STATICFILES_DIRS = [
     BASE_DIR / "main_app" / "static",
 ]
 
-LOGIN_URL = '/accounts/login/'
+# LOGIN_URL = '/accounts/login/'
+
+LOGIN_REDIRECT_URL = '/posts/'
 
 LOGOUT_REDIRECT_URL = '/'

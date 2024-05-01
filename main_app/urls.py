@@ -15,8 +15,8 @@ urlpatterns = [
     path('post/<int:post_id>/bookmark/', views.bookmark_post, name='bookmark_post'),
     path('bookmarked/', views.bookmarked_posts, name='bookmarked_posts'),
     path('post/create/', views.post_create, name='post_create'),
-    path('accounts/', include('django.contrib.auth.urls')),
-    path('register/', views.register, name='register'),
+    # path('register/', views.register, name='register'),
     path('logout/', views.logout_view, name='logout'),
     path('logout/', LogoutView.as_view(next_page='/'), name='logout'),
+    path('accounts/signup/', views.signup, name='signup'),
 ]
