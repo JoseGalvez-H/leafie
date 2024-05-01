@@ -18,13 +18,20 @@
             <button type="submit" class="py-2 px-4 bg-yellow-500 hover:bg-yellow-600 text-white rounded transition duration-300 ease-in-out">Bookmark</button>
         </form>
     </div>
-
     <section class="comments my-4">
         <h2>Comments</h2>
         {% if comments %}
             <ul style="list-style-type: none; padding: 0;">
                 {% for comment in comments %}
-                    <li style="margin-bottom: 1rem; background-color: #DEF7EC; padding: 1rem; border-radius: 0.5rem;">{{ comment.author.username }} says: "{{ comment.content }}"</li>
+                    <li style="margin-bottom: 1rem; background-color: #DEF7EC; padding: 1rem; border-radius: 0.5rem;">
+                        {{ comment.author.username }} says: "{{ comment.content }}"
+                        {% if request.user == comment.author %}
+                            <form action="{% url 'delete_comment' post_id=post.pk comment_id=comment.pk %}" method="post" style="display: inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="py-1 px-2 bg-red-500 hover:bg-red-600 text-white rounded transition duration-300 ease-in-out">X</button>
+                            </form>
+                        {% endif %}
+                    </li>
                 {% endfor %}
             </ul>
         {% else %}
@@ -43,8 +50,6 @@
             </button>
         </form>
     </section>
-
-
     <div class="navigation mt-4 mb-2">
         <a href="{% url 'posts_list' %}" class="py-2 px-4 bg-gray-500 hover:bg-gray-600 text-white rounded transition duration-300 ease-in-out">Back to all posts</a>
     </div>

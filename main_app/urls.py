@@ -19,4 +19,6 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     path('logout/', LogoutView.as_view(next_page='/'), name='logout'),
     path('accounts/signup/', views.signup, name='signup'),
+    path('post/<int:post_id>/delete-comment/<int:comment_id>/', views.delete_comment, name='delete_comment'),
+
 ]

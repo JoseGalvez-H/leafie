@@ -27,24 +27,27 @@ def logout_view(request):
     logout(request)
     return redirect('home')
 
-
+@login_required
 def posts_list(request):
     posts = Post.objects.all()
     return render(request, 'posts/index.html', {'posts': posts})
 
-
+@login_required
 def post_create(request):
     if request.method == 'POST':
         form = PostForm(request.POST)
-
-        def form_valid(self, form):
-            form.instance.author = self.request.user
-            return super().form_valid(form)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.save()
+            return redirect('posts_list') 
+        else:
+            print(form.errors)
     else:
         form = PostForm()
     return render(request, 'posts/create.html', {'form': form})
 
-
+@login_required
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
     comments = post.comments.all()
@@ -61,7 +64,7 @@ def post_detail(request, pk):
     return render(request, 'posts/detail.html', {'post': post, 'comments': comments, 'form': form})
 
 
-
+@login_required
 def post_delete(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.user == post.author:
@@ -71,7 +74,7 @@ def post_delete(request, pk):
         return redirect('posts_detail', pk=pk)
 
 
-
+@login_required
 def add_comment(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
     if request.method == 'POST':
@@ -86,13 +89,13 @@ def add_comment(request, post_id):
         form = CommentForm()
     return render(request, 'posts/comments/add.html', {'form': form, 'post': post})
 
-
+@login_required
 def delete_comment(request, post_id, comment_id):
     comment = get_object_or_404(Comment, pk =comment_id, post_id=post_id, author=request.user)
     comment.delete()
     return redirect('post_detail', pk=post_id)
 
-
+@login_required
 def like_post(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
     like, created = Like.objects.get_or_create(post=post, user=request.user)
@@ -100,7 +103,7 @@ def like_post(request, post_id):
         like.delete() 
     return redirect('posts_list')
 
-
+@login_required
 def bookmark_post(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
     bookmark, created = Bookmark.objects.get_or_create(post=post, user=request.user)
@@ -108,7 +111,7 @@ def bookmark_post(request, post_id):
         bookmark.delete() 
     return redirect('bookmarked_posts')
 
-
+@login_required
 def bookmarked_posts(request):
     bookmarks = Bookmark.objects.filter(user=request.user).select_related('post')
     posts = [bookmark.post for bookmark in bookmarks]
@@ -118,7 +121,7 @@ def bookmarked_posts(request):
 def home(request):
     return render(request, 'home.html')
 
-
+@login_required
 def about(request):
     API_KEY = os.environ.get('API_KEY')
     query = request.GET.get('q')
