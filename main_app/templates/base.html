@@ -25,6 +25,11 @@
                     <li><a href="/about" style="color: #046C4E;" class="hover:underline">Learn</a></li>
                     <li><a href="/plants" style="color: #046C4E;" class="hover:underline">Community</a></li>
                     <li><a href="{% url 'bookmarked_posts' %}" style="color: #046C4E;" class="hover:underline">Bookmarked Posts</a></li>
+                    {% if request.user.is_authenticated %}
+                    <li><a href="{% url 'logout' %}" style="color: #046C4E;" class="hover:underline">Logout</a></li>
+                    {% else %}
+                    <a href="{% url 'login' %}" style="color: #046C4E;" class="hover:underline">Login</a>
+                    {% endif %}
                 </ul>
             </nav>
         </div>

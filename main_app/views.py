@@ -1,14 +1,34 @@
 from django.shortcuts import render, redirect, get_object_or_404
-import os
+from django.contrib.auth.decorators import login_required
 from .models import Post, Comment, Like, Bookmark
 from .forms import PostForm, CommentForm
+from .forms import RegisterForm
+from django.contrib.auth import login
+from django.contrib.auth import logout
 import requests, random
+import os
 
+def register(request):
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('home')
+    else:
+        form = RegisterForm()
+    return render(request, 'registration/register.html', {'form': form})
+
+def logout_view(request):
+    logout(request)
+    return redirect('home')
+
+@login_required
 def posts_list(request):
     posts = Post.objects.all()
     return render(request, 'posts/index.html', {'posts': posts})
 
-
+@login_required
 def post_create(request):
     if request.method == 'POST':
         form = PostForm(request.POST)
@@ -23,35 +43,34 @@ def post_create(request):
         form = PostForm()
     return render(request, 'posts/create.html', {'form': form})
 
+@login_required
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
     comments = post.comments.all()
-
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
             comment = form.save(commit=False)
             comment.post = post
-            comment.author = request.user 
+            comment.author = request.user
             comment.save()
             return redirect('post_detail', pk=post.pk)
     else:
         form = CommentForm()
     return render(request, 'posts/detail.html', {'post': post, 'comments': comments, 'form': form})
 
+
+@login_required
 def post_delete(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.user == post.author:
         post.delete()
         return redirect('posts_list')
-    return redirect('posts_list')
-
-def post_detail(request, pk):
-    post = get_object_or_404(Post, pk=pk)
-    comments = post.comments.all()
-    return render(request, 'posts/detail.html', {'post': post, 'comments': comments})
+    else:
+        return redirect('posts_detail', pk=pk)
 
 
+@login_required
 def add_comment(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
     if request.method == 'POST':
@@ -66,12 +85,13 @@ def add_comment(request, post_id):
         form = CommentForm()
     return render(request, 'posts/comments/add.html', {'form': form, 'post': post})
 
-
+@login_required
 def delete_comment(request, post_id, comment_id):
     comment = get_object_or_404(Comment, pk =comment_id, post_id=post_id, author=request.user)
     comment.delete()
     return redirect('post_detail', pk=post_id)
 
+@login_required
 def like_post(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
     like, created = Like.objects.get_or_create(post=post, user=request.user)
@@ -79,6 +99,7 @@ def like_post(request, post_id):
         like.delete() 
     return redirect('posts_list')
 
+@login_required
 def bookmark_post(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
     bookmark, created = Bookmark.objects.get_or_create(post=post, user=request.user)
@@ -86,6 +107,7 @@ def bookmark_post(request, post_id):
         bookmark.delete() 
     return redirect('bookmarked_posts')
 
+@login_required
 def bookmarked_posts(request):
     bookmarks = Bookmark.objects.filter(user=request.user).select_related('post')
     posts = [bookmark.post for bookmark in bookmarks]
@@ -116,7 +138,7 @@ def home(request):
 #         print("Error decoding JSON from API")
 #     return render(request, 'about.html', {'plant': plant})
 
-
+@login_required
 def about(request):
     API_KEY = os.environ.get('API_KEY')
     query = request.GET.get('q')
