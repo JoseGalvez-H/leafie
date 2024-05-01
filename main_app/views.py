@@ -117,27 +117,6 @@ def bookmarked_posts(request):
 def home(request):
     return render(request, 'home.html')
 
-# def about(request):
-#     API_KEY = os.environ.get('API_KEY')
-#     query = request.GET.get('q')
-#     url = f'https://perenual.com/api/species-list?key={API_KEY}'
-    
-#     if query:
-#         url += f'&q={query}'
-#     try:
-#         response = requests.get(url)
-#         response.raise_for_status()
-#         data = response.json()
-#         plants = data.get('data', [])
-#         plant = plants[0] if plants else None
-#     except requests.RequestException as e:
-#         plant = None
-#         print(f"API request failed: {e}")
-#     except ValueError:
-#         plant = None
-#         print("Error decoding JSON from API")
-#     return render(request, 'about.html', {'plant': plant})
-
 @login_required
 def about(request):
     API_KEY = os.environ.get('API_KEY')
