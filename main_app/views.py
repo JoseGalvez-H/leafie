@@ -51,6 +51,10 @@ def post_create(request):
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
     comments = post.comments.all()
+
+    user_has_liked = post.likes.filter(user=request.user).exists()
+    like_count = post.likes.count()
+
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
@@ -101,7 +105,7 @@ def like_post(request, post_id):
     like, created = Like.objects.get_or_create(post=post, user=request.user)
     if not created:
         like.delete() 
-    return redirect('posts_list')
+    return redirect('post_detail', pk=post.pk)
 
 @login_required
 def bookmark_post(request, post_id):

@@ -9,10 +9,14 @@
         {% if request.user == post.author %}
         <a href="{% url 'post_delete' pk=post.pk %}" class="py-2 px-4 bg-red-500 hover:bg-red-600 text-white rounded transition duration-300 ease-in-out">Delete Post</a>
         {% endif %}
+
         <form action="{% url 'like_post' post_id=post.pk %}" method="post" style="display: inline;">
             {% csrf_token %}
-            <button type="submit" class="py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white rounded transition duration-300 ease-in-out">Like</button>
+            <button type="submit" class="py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white rounded transition duration-300 ease-in-out">
+                Like ({{ post.likes.count }})
+            </button>
         </form>
+
         <form action="{% url 'bookmark_post' post_id=post.pk %}" method="post" style="display: inline;">
             {% csrf_token %}
             <button type="submit" class="py-2 px-4 bg-yellow-500 hover:bg-yellow-600 text-white rounded transition duration-300 ease-in-out">Bookmark</button>
