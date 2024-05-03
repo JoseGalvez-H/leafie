@@ -16,6 +16,19 @@
 - **Frontend**: HTML, CSS (with Django template language)
 - **API Integration**: External plant care API to fetch plant-specific data and images.
 
+## Screenshots
+
+Here are some screenshots of the application in action:
+
+### Home Page
+![Image 1](./main_app/static/images/home.png)
+### Learn
+![Image 2](./main_app/static/images/learn.png)
+### Community
+![Image 3](./main_app/static/images/allposts.png)
+### Details
+![Image 4](./main_app/static/images/details.png)
+
 ## Planned Enhancements
 
 ### Interactive Plant Care Calendars
