@@ -4,13 +4,15 @@
 <div style="background-color: #F3FAF7; color: #03543F;" class="p-4 max-w-lg mx-auto rounded shadow-lg">
     <h1 style="color: #046C4E; font-size: 2.5rem; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);" class="font-bold text-center mb-6">Create a New Post</h1>
     
-    <form method="post" action="{% url 'post_create' %}" class="flex flex-col space-y-4">
+    <form method="post" action="{% url 'post_create' %}" class="flex flex-col items-center space-y-4">
         {% csrf_token %}
-        <div style="color: #03543F;">
+        <div class="w-full" style="color: #03543F;">
             {% for field in form %}
-            <div class="mb-2">
+            <div class="mb-2 text-center">
                 {{ field.label_tag }}
-                {{ field }}
+                <div class="inline-block w-full max-w-md">
+                    {{ field }}
+                </div>
                 {% if field.help_text %}
                 <p class="text-sm text-green-600">{{ field.help_text }}</p>
                 {% endif %}
@@ -21,18 +23,17 @@
             {% endfor %}
         </div>
         {% if form.errors %}
-            <div style="background-color: #FFE5E5; color: #D8000C; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
+            <div style="background-color: #FFE5E5; color: #D8000C; padding: 10px; border-radius: 5px; margin-bottom: 10px;" class="w-full max-w-md">
                 <strong>Form errors:</strong>
                 {{ form.errors }}
             </div>
         {% endif %}
         <button type="submit"
             style="background-color: #31C48D; color: white; border: none; padding: 8px 16px; border-radius: 8px; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1); cursor: pointer; transition: background-color 0.3s ease-in-out;"
-            class="hover:bg-emerald-600 focus:outline-none focus:shadow-outline w-full text-center">
+            class="hover:bg-emerald-600 focus:outline-none focus:shadow-outline w-full max-w-md text-center">
             Submit
         </button>
     </form>
-
     <a href="{% url 'posts_list' %}" style="color: #057A55; text-decoration: none; font-weight: bold;" class="hover:underline text-center block mt-4">Back to all posts</a>
 </div>
 {% endblock %}

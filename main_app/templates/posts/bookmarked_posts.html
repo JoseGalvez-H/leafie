@@ -9,7 +9,16 @@
         <li class="mb-4 p-4 rounded shadow" style="background-color: #DEF7EC;">
             <h2 style="color: #057A55; font-size: 1.5rem;" class="font-bold">{{ post.title }}</h2>
             <p>{{ post.content|truncatewords:30 }}</p>
-            <a href="{% url 'post_detail' pk=post.pk %}" style="color: #046C4E; font-weight: bold;" class="hover:underline">Read more...</a>
+            <a href="{% url 'post_detail' pk=post.pk %}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-emerald-600 bg-white border border-emerald-600 rounded-lg hover:bg-emerald-600 hover:text-white focus:outline-none focus:ring-4 focus:ring-emerald-300">
+                Read more
+                <svg class="w-3.5 h-3.5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m0 0l-4-4m4 4l-4 4"></path>
+                </svg>
+            </a>
+            <!-- <a href="{% url 'post_detail' pk=post.pk %}" class="py-2 px-4 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-opacity-75 transition duration-300 ease-in-out">
+                Read more...
+            </a> -->
+            <!-- <a href="{% url 'post_detail' pk=post.pk %}" style="color: #046C4E; font-weight: bold;" class="py-2 px-4 bg-emerald-500 hover:bg-emerald-600 text-emerald-600 font-semibold rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-opacity-75 transition duration-300 ease-in-out">Read more...</a> -->
         </li>
         {% endfor %}
     </ul>

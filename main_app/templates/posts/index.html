@@ -5,8 +5,11 @@
     <h1 style="color: #046C4E; font-size: 2.5rem; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);" class="font-bold text-center mb-4">All Posts</h1>
 
     <h4 class="text-right self-end mb-4">
-        <a href="{% url 'post_create' %}" style="color: #31C48D; font-weight: bold;" class="hover:underline">Add Post</a>
+        <a href="{% url 'post_create' %}" class="py-2 px-4 bg-emerald-500 hover:bg-emerald-600 text-emerald-600 font-semibold rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-opacity-75 transition duration-300 ease-in-out">
+            Add Post
+        </a>
     </h4>
+    
     <ul style="list-style-type: none; padding: 0; width: 100%;">
         {% for post in posts %}
         <li style="background-color: #DEF7EC; border: 1px solid #BCF0DA; padding: 6px; border-radius: 8px; shadow: 0 2px 4px rgba(0, 0, 0, 0.25);" class="mb-4 rounded-lg">
@@ -14,12 +17,14 @@
                 <h5 style="color: #057A55; font-size: 1.5rem; font-weight: bold;" class="mb-2 tracking-tight">{{ post.title }}</h5>
             </a>
             <p class="mb-3 font-normal" style="color: #03543F;">{{ post.content|truncatewords:30 }}</p>
-            <a href="{% url 'post_detail' pk=post.pk %}" class="read-more-btn inline-flex items-center px-3 py-2 text-sm font-medium text-center border border-emerald-600 text-emerald-600 bg-white rounded-lg hover:bg-emerald-600 hover:text-white focus:outline-none focus:ring-4 focus:ring-emerald-300">
+
+            <a href="{% url 'post_detail' pk=post.pk %}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-emerald-600 bg-white border border-emerald-600 rounded-lg hover:bg-emerald-600 hover:text-white focus:outline-none focus:ring-4 focus:ring-emerald-300">
                 Read more
-                <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                <svg class="w-3.5 h-3.5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m0 0l-4-4m4 4l-4 4"></path>
                 </svg>
             </a>
+            
         </li>
         {% endfor %}
     </ul>

@@ -1,15 +1,20 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div class="flex justify-center items-center min-h-screen bg-emerald-50">
+    <div class="w-full max-w-md p-8 space-y-3 rounded-xl bg-white shadow-lg">
+        <h1 class="text-2xl font-bold text-center text-emerald-600">Log In</h1>
 
-<form action="{% url 'login' %}" method="post">
-    {% csrf_token %}
-    {{ form.as_p}}
-        <input type="hidden" name="next" value="{{ next }}">
-        <button type="submit" class="btn">Log In</button>
-</form>
-
+        <form action="{% url 'login' %}" method="post" class="space-y-6">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="hidden" name="next" value="{{ next }}">
+            <button type="submit" class="py-2 px-4 bg-emerald-500 hover:bg-emerald-600 text-emerald-600 font-semibold rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-opacity-75 transition duration-300 ease-in-out">
+                Log In
+            </button>
+        </form>
+    </div>
+</div>
 {% endblock %}
-
 
 

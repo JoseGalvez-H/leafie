@@ -29,7 +29,7 @@ def logout_view(request):
 
 @login_required
 def posts_list(request):
-    posts = Post.objects.all()
+    posts = Post.objects.order_by('-created_at')
     return render(request, 'posts/index.html', {'posts': posts})
 
 @login_required

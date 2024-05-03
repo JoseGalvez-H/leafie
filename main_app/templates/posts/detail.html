@@ -18,6 +18,7 @@
             <button type="submit" class="py-2 px-4 bg-yellow-500 hover:bg-yellow-600 text-white rounded transition duration-300 ease-in-out">Bookmark</button>
         </form>
     </div>
+    <hr>
     <section class="comments my-4">
         <h2>Comments</h2>
         {% if comments %}
@@ -39,13 +40,13 @@
         {% endif %}
     </section>
     <section class="add-comment mt-4">
-        <form action="{% url 'post_detail' pk=post.pk %}" method="post">
+        <form action="{% url 'post_detail' pk=post.pk %}" method="post" class="flex flex-col items-center">
             {% csrf_token %}
-            <div class="form-group mb-2">
+            <div class="form-group mb-2 w-full max-w-md">
                 <label for="id_content">Your Comment:</label>
                 <textarea id="id_content" name="content" rows="4" cols="50" class="w-full p-2 rounded border border-green-300"></textarea>
             </div>
-            <button type="submit" class="py-2 px-4 bg-emerald-500 hover:bg-emerald-600 text-emerald-600 font-semibold rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-opacity-75 transition duration-300 ease-in-out">
+            <button type="submit" class="py-2 px-4 bg-emerald-500 hover:bg-emerald-600 text-emerald-800 font-semibold rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-opacity-75 transition duration-300 ease-in-out">
                 Submit Comment
             </button>
         </form>
@@ -53,7 +54,7 @@
     <div class="navigation mt-4 mb-2">
         <a href="{% url 'posts_list' %}" class="py-2 px-4 bg-gray-500 hover:bg-gray-600 text-white rounded transition duration-300 ease-in-out">Back to all posts</a>
     </div>
-
 </div>
+
 
 {% endblock %}
