@@ -18,7 +18,6 @@
 
 ## Screenshots
 
-Here are some screenshots of the application in action:
 
 ### Home Page
 ![Home Page Leafie](./main_app/static/images/home.png)
