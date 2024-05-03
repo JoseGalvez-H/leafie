@@ -1,7 +1,7 @@
 # LEAFIE
 
 ## Introduction
-Leafie is a dynamic blog developed using Django, designed for plant enthusiasts who wish to engage with a community by sharing posts, comments, and tips about plant care. This website not only allows users to interact with each other's posts but also integrates an API to retrieve valuable information on plant care such as watering schedules, sunlight requirements, and more.
+[Leafie](https://leafie-d35b317acff1.herokuapp.com) is a dynamic blog developed using Django, designed for plant enthusiasts who wish to engage with a community by sharing posts, comments, and tips about plant care. This website not only allows users to interact with each other's posts but also integrates an API to retrieve valuable information on plant care such as watering schedules, sunlight requirements, and more.
 
 ## Features
 - **User Authentication**: Supports user registration, login, and logout functionalities.
