@@ -8,7 +8,7 @@
 - **Plant Care Information**: Fetch plant care data from an external API, providing details like watering frequency, required sunlight, and whether the plant is suitable for indoor settings.
 - **Post Interaction**: Users can create, delete, like, and bookmark posts.
 - **Comments**: Users can comment on posts and delete their own comments.
-- **Bookmarking**: Users can bookmark posts for later reference.
+- **Bookmarking**: Users have a dedicated page for their saved posts.
 
 ## Technology Stack
 - **Backend**: Django (Python)
