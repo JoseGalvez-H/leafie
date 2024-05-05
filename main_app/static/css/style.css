@@ -1,7 +1,4 @@
-
-
 body {
-    /* background-color:bisque; */
     display: flex;
     min-height: 100vh;
     flex-direction: column;
@@ -16,3 +13,37 @@ footer.page-footer {
     text-align: right;
 }
 
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+@media (max-width: 640px) {
+    .container {
+        max-width: 100%;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}
+
+
+@media (min-width: 768px) {
+    .container {
+        max-width: 720px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .container {
+        max-width: 960px;
+    }
+}
+
+@media (min-width: 1280px) {
+    .container {
+        max-width: 1140px;
+    }
+}
